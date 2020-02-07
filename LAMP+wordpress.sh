@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $OS != centos || $VER != 7 ]]; then
+	echo Currently the script only supports Centos 7.
+	exit 1
+fi
+
 #Install Apache
 yum -y install httpd
 systemctl start httpd.service
