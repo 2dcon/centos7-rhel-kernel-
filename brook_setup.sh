@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #required package
+yum -y update
 yum -y install wget
 
 #define colors
@@ -29,7 +30,7 @@ case $OPTION in
 		mkdir /bin/brook
 		cd /bin/brook
 		wget https://github.com/txthinking/brook/releases/download/v20200201/brook
-		cd /etc/systemd/system/
+		cd /etc/systemctl/system/
 		printf "Which port would you like to use? (Leave blank for random prot)\n"
 		read PORT
 		if [[ -z $PORT ]]; then
@@ -51,9 +52,9 @@ ExecStart=/bin/brook server -l :$PORT -p $PW
 [Install]
 WantedBy=multi-user.target" > brook.service
 
-		systemd daemon-reload
-		systemd enable brook
-		systemd start brook
+		systemctl daemon-reload
+		systemctl enable brook
+		systemctl start brook
 		;;
 
 	#uninstall
