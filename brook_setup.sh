@@ -1,5 +1,7 @@
-#A bash script for setting up Brook
 #!/bin/bash
+
+#required package
+yum -y install wget
 
 #define colors
 red=$'\e[1;31m'
