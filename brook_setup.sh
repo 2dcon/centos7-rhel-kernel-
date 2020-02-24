@@ -30,7 +30,7 @@ case $OPTION in
 		mkdir /bin/brook
 		cd /bin/brook
 		wget https://github.com/txthinking/brook/releases/download/v20200201/brook
-		cd /etc/systemctl/system/
+		cd /etc/systemd/system/
 		printf "Which port would you like to use? (Leave blank for random prot)\n"
 		read PORT
 		if [[ -z $PORT ]]; then
