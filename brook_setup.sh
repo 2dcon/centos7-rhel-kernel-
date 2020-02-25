@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#required package
-yum -y update
-yum -y install wget
 
 #define colors
 red=$'\e[1;31m'
@@ -26,10 +23,20 @@ case $OPTION in
 		printf "Operation terminated.\n"
 		exit 0
 		fi
+		#required package
+		yum -y update
+		yum -y install wget
 
 		mkdir /bin/brook
 		cd /bin/brook
+		#Overwrite if brook exists
+		if [[ -f brook ]]; then
+			rm brook
+		fi
+
 		wget https://github.com/txthinking/brook/releases/download/v20200201/brook
+		chmod +x brook
+		#Create systemd service
 		cd /etc/systemd/system/
 		printf "Which port would you like to use? (Leave blank for random prot)\n"
 		read PORT
@@ -43,11 +50,11 @@ case $OPTION in
 			PW='2dcon@github'
 		fi
 
-		#Delete the systemd unit if it exists
+		#Delete brook.service if it exists
 		if [[ -f brook.service ]]; then
 			rm brook.service
 		fi
-		
+
 		echo "[Unit]
 Description=Brook VPN
 
