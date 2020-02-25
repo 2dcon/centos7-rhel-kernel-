@@ -43,6 +43,11 @@ case $OPTION in
 			PW='2dcon@github'
 		fi
 
+		#Delete the systemd unit if it exists
+		if [[ -f brook.service ]]; then
+			rm brook.service
+		fi
+		
 		echo "[Unit]
 Description=Brook VPN
 
