@@ -64,6 +64,10 @@ ExecStart=/bin/brook server -l :$PORT -p $PW
 [Install]
 WantedBy=multi-user.target" > brook.service
 
+		#Add port to firewall
+		firewall-cmd --permanent --zone=public --add-port=$PORT/tcp
+		firewall-cmd --reload
+
 		systemctl daemon-reload
 		systemctl enable brook
 		systemctl start brook
