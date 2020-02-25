@@ -34,7 +34,7 @@ case $OPTION in
 		printf "Which port would you like to use? (Leave blank for random prot)\n"
 		read PORT
 		if [[ -z $PORT ]]; then
-			PORT = $((10000 + RANDOM % 55536))
+			PORT=$((10000 + RANDOM % 55536))
 		fi
 
 		printf "Set the password (default: 2dcon@github): "
