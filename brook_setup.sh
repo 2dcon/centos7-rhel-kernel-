@@ -71,6 +71,12 @@ WantedBy=multi-user.target" > brook.service
 		systemctl daemon-reload
 		systemctl enable brook
 		systemctl start brook
+
+		IPADDR="$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')"
+		printf "$grn\nInstallation success$clr!
+		Server IP: $IPADDR
+		Port:			 $PORT
+		Password:  $PW"
 		;;
 
 	#uninstall
