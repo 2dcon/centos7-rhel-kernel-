@@ -27,6 +27,8 @@ case $OPTION in
 		yum -y update
 		yum -y install wget
 
+		systemctl stop brook #stop brook if it exists
+		
 		mkdir /bin/brook
 		cd /bin/brook
 		#Overwrite if brook exists
@@ -59,7 +61,7 @@ case $OPTION in
 Description=Brook VPN
 
 [Service]
-ExecStart=/bin/brook server -l :$PORT -p $PW
+ExecStart=/bin/brook/brook server -l :$PORT -p $PW
 
 [Install]
 WantedBy=multi-user.target" > brook.service
@@ -75,7 +77,7 @@ WantedBy=multi-user.target" > brook.service
 		IPADDR="$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')"
 		printf "$grn\nInstallation success$clr!
 		Server IP: $IPADDR
-		Port:			 $PORT
+		Port:      $PORT
 		Password:  $PW"
 		;;
 
