@@ -40,7 +40,7 @@ case $OPTION in
 		printf "Set the password (default: 2dcon@github): "
 		read PW
 		if [[ -z $PW ]]; then
-			PW = '2dcon@github'
+			PW='2dcon@github'
 		fi
 
 		echo "[Unit]
