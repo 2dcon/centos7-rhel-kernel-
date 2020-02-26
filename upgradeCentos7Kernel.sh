@@ -3,7 +3,7 @@
 #check distro version
 if [ -f /etc/os-release ]; then
 	. /etc/os-release
-	OS=$ID	
+	OS=$ID
 	VER=$VERSION_ID
 fi
 
@@ -18,6 +18,7 @@ fi
 if [[ $VER == 7 ]]; then
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	rpm -Uvh https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+	yum -y update
 	yum -y --enablerepo=elrepo-kernel install kernel-ml
 	grub2-set-default 0
 	reboot
@@ -25,6 +26,7 @@ if [[ $VER == 7 ]]; then
 else
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	dnf -y install https://www.elrepo.org/elreporelease-8.0-2.el8.elrepo.noarch.rpm
+	dnf -y update
 	dnf --enablerepo=elrepo-kernel install kernel-ml
 	reboot
 fi
