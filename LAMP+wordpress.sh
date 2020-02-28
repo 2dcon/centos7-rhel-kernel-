@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -f /etc/os-release ]; then
-	. /etc/os-release
+if [ -f /etc/*-release ]; then
+	. /etc/*-release
 	OS=$ID
 	VER=$VERSION_ID
 fi
