@@ -6,6 +6,9 @@ if [[ -f /etc/*-release ]]; then
 	VER=$VERSION_ID
 fi
 
+echo $OS
+echo $VER
+
 if [[ $OS != centos || $VER != 7 ]]; then
 	echo Currently the script only supports Centos 7.
 	exit 1
