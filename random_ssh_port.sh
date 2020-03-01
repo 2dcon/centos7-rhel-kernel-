@@ -1,3 +1,6 @@
+#################################################
+# WARNING: make sure to note down the new port! #
+#################################################
 #!/bin/bash
 
 FILE="/etc/ssh/sshd_config"
