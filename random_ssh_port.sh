@@ -1,5 +1,3 @@
-#TODO: Port is not being added to the file
-
 #################################################
 # WARNING: make sure to note down the new port! #
 #################################################
@@ -24,6 +22,5 @@ echo $KEY >> ~/.ssh/authorized_keys
 #Disable password login
 sed -i '/^[PasswordAuthentication]/d' $FILE
 echo "PasswordAuthentication no" >> $FILE
-echo "Port $PORT" >> $FILE
 
 echo "The new ssh port is: $PORT"
