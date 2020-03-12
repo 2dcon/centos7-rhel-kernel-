@@ -24,4 +24,6 @@ sed -i '/^[PasswordAuthentication]/d' $FILE
 echo "Port $PORT" >> $FILE
 echo "PasswordAuthentication no" >> $FILE
 
+systemctl restart sshd
+
 echo "The new ssh port is: $PORT"
