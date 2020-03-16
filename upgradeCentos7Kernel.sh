@@ -21,15 +21,18 @@ if [[ $VER == 7 ]]; then
 	yum -y update
 	yum -y --enablerepo=elrepo-kernel install kernel-ml
 	grub2-set-default 0
-	reboot
 #for CentOS 8
 else
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	dnf -y install https://www.elrepo.org/elreporelease-8.0-2.el8.elrepo.noarch.rpm
 	dnf --enablerepo=elrepo-kernel install kernel-ml
 	dnf -y update
-	
-	reboot
 fi
+#enable bbr
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+sysctl -p
+
+reboot
 
 exit 0
