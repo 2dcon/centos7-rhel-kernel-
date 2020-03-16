@@ -24,9 +24,8 @@ if [[ $VER == 7 ]]; then
 #for CentOS 8
 else
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-	dnf -y install https://www.elrepo.org/elreporelease-8.0-2.el8.elrepo.noarch.rpm
+	dnf -y install https://www.elrepo.org/elrepo-release-8.0-2.el8.elrepo.noarch.rpm
 	dnf --enablerepo=elrepo-kernel install kernel-ml
-	dnf -y update
 fi
 #enable bbr
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
