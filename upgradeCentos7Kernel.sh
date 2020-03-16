@@ -25,7 +25,7 @@ if [[ $VER == 7 ]]; then
 else
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	dnf -y install https://www.elrepo.org/elrepo-release-8.0-2.el8.elrepo.noarch.rpm
-	dnf --enablerepo=elrepo-kernel install kernel-ml
+	dnf -y --enablerepo=elrepo-kernel install kernel-ml
 fi
 #enable bbr
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
