@@ -26,8 +26,9 @@ if [[ $VER == 7 ]]; then
 else
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	dnf -y install https://www.elrepo.org/elreporelease-8.0-2.el8.elrepo.noarch.rpm
-	dnf -y update
 	dnf --enablerepo=elrepo-kernel install kernel-ml
+	dnf -y update
+	
 	reboot
 fi
 
