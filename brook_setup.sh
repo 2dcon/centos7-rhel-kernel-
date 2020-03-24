@@ -68,6 +68,7 @@ WantedBy=multi-user.target" > brook.service
 
 		#Add port to firewall
 		firewall-cmd --permanent --zone=public --add-port=$PORT/tcp
+		firewall-cmd --permanent --zone=public --add-port=$PORT/udp
 		firewall-cmd --reload
 
 		systemctl daemon-reload
