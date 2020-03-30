@@ -61,6 +61,8 @@ case $OPTION in
 Description=Brook VPN
 
 [Service]
+Type=idle
+LimitNOFILE=99999
 ExecStart=/bin/brook/brook server -l :$PORT -p $PW
 
 [Install]
