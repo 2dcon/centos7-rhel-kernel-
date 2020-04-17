@@ -26,6 +26,7 @@ case $OPTION in
 		#required package
 		yum -y update
 		yum -y install wget
+		yum -y install net-tools
 
 		systemctl stop brook #stop brook if it exists
 		
