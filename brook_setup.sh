@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 #define colors
 red=$'\e[1;31m'
 grn=$'\e[1;32m'
@@ -20,13 +19,25 @@ case $OPTION in
 		printf "Install Brook?(y/n)"
 		read YN
 		if [[ $YN != Y && $YN != y ]]; then
-		printf "Operation terminated.\n"
+			printf "Operation terminated.\n"
 		exit 0
 		fi
+		
+		if [ -f /etc/os-release ]; then
+			. /etc/os-release
+			OS=$ID
+			VER=$VERSION_ID
+		fi
+		if [[ $OS == debian ]]
+			PM='apt'
+		elif [[ $OS == centos ]]
+			PM='yum'
+		fi
+		
 		#required package
-		yum -y update
-		yum -y install wget
-		yum -y install net-tools
+		$PM -y update
+		$PM -y install wget
+		$PM -y install net-tools
 
 		systemctl stop brook #stop brook if it exists
 		
@@ -68,12 +79,14 @@ ExecStart=/bin/brook/brook server -l :$PORT -p $PW
 
 [Install]
 WantedBy=multi-user.target" > brook.service
-
-		#Add port to firewall
-		firewall-cmd --permanent --zone=public --add-port=$PORT/tcp
-		firewall-cmd --permanent --zone=public --add-port=$PORT/udp
-		firewall-cmd --reload
-
+		
+		if [[ $OS==centos ]]
+			#Add port to firewall
+			firewall-cmd --permanent --zone=public --add-port=$PORT/tcp
+			firewall-cmd --permanent --zone=public --add-port=$PORT/udp
+			firewall-cmd --reload
+		fi
+		
 		systemctl daemon-reload
 		systemctl enable brook
 		systemctl start brook
