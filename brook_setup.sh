@@ -28,9 +28,10 @@ case $OPTION in
 			OS=$ID
 			VER=$VERSION_ID
 		fi
-		if [[ $OS == debian ]]
+		
+		if [[ $OS == debian ]]; then
 			PM='apt'
-		elif [[ $OS == centos ]]
+		elif [[ $OS == centos ]]; then
 			PM='yum'
 		fi
 		
@@ -80,7 +81,7 @@ ExecStart=/bin/brook/brook server -l :$PORT -p $PW
 [Install]
 WantedBy=multi-user.target" > brook.service
 		
-		if [[ $OS==centos ]]
+		if [[ $OS==centos ]]; then
 			#Add port to firewall
 			firewall-cmd --permanent --zone=public --add-port=$PORT/tcp
 			firewall-cmd --permanent --zone=public --add-port=$PORT/udp
