@@ -9,7 +9,7 @@ clr=$'\e[0m'
 
 printf "What would you like to do?\n"
 printf "$grn\t1.Install Brook\n$clr"
-printf "$yel\t2.Install Brook\n$clr"
+printf "$yel\t2.Update Brook\n$clr"
 printf "$red\t3.Uninstall Brook$clr"
 
 read OPTION
