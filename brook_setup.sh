@@ -9,7 +9,8 @@ clr=$'\e[0m'
 
 printf "What would you like to do?\n"
 printf "$grn\t1.Install Brook\n$clr"
-printf "$red\t2.Uninstall Brook$clr"
+printf "$grn\t2.Install Brook\n$clr"
+printf "$red\t3.Uninstall Brook$clr"
 
 read OPTION
 
@@ -49,7 +50,8 @@ case $OPTION in
 			rm brook
 		fi
 
-		wget https://github.com/txthinking/brook/releases/download/v20200201/brook
+		wget https://github.com/txthinking/brook/releases/download/v20200502/brook_linux_amd64
+		
 		chmod +x brook
 		#Create systemd service
 		cd /etc/systemd/system/
@@ -98,9 +100,17 @@ WantedBy=multi-user.target" > brook.service
 		Port:      $PORT
 		Password:  $PW"
 		;;
-
-	#uninstall
+	
 	2)
+		systemctl stop brook
+		
+		cd /temp/
+		wget https://github.com/txthinking/brook/releases/download/v20200502/brook_linux_amd64
+		cp -rf brook_linux_amd64 /bin/brook/brook
+		mv -f brook_linux_amd64
+		
+		systemctl start brook
+	3)
 		printf "Uninstall Brook(y/n)"
 		read YN
 		if [[ $YN != Y && $YN != y ]]; then
