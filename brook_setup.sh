@@ -107,7 +107,7 @@ WantedBy=multi-user.target" > brook.service
 		cd /temp/
 		wget https://github.com/txthinking/brook/releases/download/v20200502/brook_linux_amd64
 		cp -rf brook_linux_amd64 /bin/brook/brook
-		mv -f brook_linux_amd64
+		rm -f brook_linux_amd64
 		
 		systemctl start brook
 		;;
