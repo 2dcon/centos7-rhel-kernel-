@@ -110,6 +110,7 @@ WantedBy=multi-user.target" > brook.service
 		mv -f brook_linux_amd64
 		
 		systemctl start brook
+		;;
 	3)
 		printf "Uninstall Brook(y/n)"
 		read YN
