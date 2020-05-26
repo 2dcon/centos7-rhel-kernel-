@@ -15,7 +15,10 @@ FILE="/etc/ssh/sshd_config"
 
 sed -i '/^[Port 22]/d' $FILE
 
+yum install policycoreutils-python
+
 PORT=$((1000 + RANDOM % 9000))
+semanage port -a -t ssh_port_t -p tcp $PORT
 firewall-cmd --permanent --add-port=$PORT/tcp
 sudo firewall-cmd --reload
 
