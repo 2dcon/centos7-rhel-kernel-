@@ -25,6 +25,7 @@ if [[ $VER == 7 ]]; then
 	grub2-set-default 0
 #for CentOS 8
 else
+	dnf upgrade
 	rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 	dnf -y install https://www.elrepo.org/elrepo-release-8.0-2.el8.elrepo.noarch.rpm
 	dnf -y --enablerepo=elrepo-kernel install kernel-ml
