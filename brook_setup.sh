@@ -52,6 +52,7 @@ case $OPTION in
 
 		wget https://github.com/txthinking/brook/releases/download/v20200502/brook_linux_amd64
 		
+		mv brook_linux_amd64 brook
 		chmod +x brook
 		#Create systemd service
 		cd /etc/systemd/system/
