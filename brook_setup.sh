@@ -50,7 +50,7 @@ case $OPTION in
 			rm brook
 		fi
 
-		wget https://github.com/txthinking/brook/releases/download/v20200502/brook_linux_amd64
+		wget https://github.com/txthinking/brook/releases/download/v20200701/brook_linux_amd64
 		
 		mv brook_linux_amd64 brook
 		chmod +x brook
@@ -106,7 +106,7 @@ WantedBy=multi-user.target" > brook.service
 		systemctl stop brook
 		
 		cd /temp/
-		wget https://github.com/txthinking/brook/releases/download/v20200502/brook_linux_amd64
+		wget https://github.com/txthinking/brook/releases/download/v20200701/brook_linux_amd64
 		cp -rf brook_linux_amd64 /bin/brook/brook
 		rm -f brook_linux_amd64
 		
