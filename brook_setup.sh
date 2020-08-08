@@ -108,6 +108,7 @@ WantedBy=multi-user.target" > brook.service
 		cd /temp/
 		wget https://github.com/txthinking/brook/releases/download/v20200801/brook_linux_amd64
 		cp -rf brook_linux_amd64 /bin/brook/brook
+		chmod +x /bin/brook/brook
 		rm -f brook_linux_amd64
 		
 		systemctl start brook
@@ -119,8 +120,10 @@ WantedBy=multi-user.target" > brook.service
 		printf "Operation terminated.\n"
 		exit 0
 		fi
-
-	rm -r /bin/brook
+	systemctl stop brook
+	systemctl disable brook
+	rm -f /etc/systemd/system/brook.service
+	rm -rf /bin/brook
 	  ;;
 	*)
 esac
