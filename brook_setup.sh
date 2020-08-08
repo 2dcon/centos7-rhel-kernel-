@@ -30,7 +30,7 @@ case $OPTION in
 			VER=$VERSION_ID
 		fi
 		
-		if [[ $OS == debian ]]; then
+		if [[ $OS == debian || $OS == ubuntu ]]; then
 			PM='apt'
 		elif [[ $OS == centos ]]; then
 			PM='yum'
