@@ -7,6 +7,22 @@ yel=$'\e[1;33m'
 blu=$'\e[1;34m'
 clr=$'\e[0m'
 
+#local path
+path='/bin/brook'
+
+#get latest release
+dlink=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/txthinking/brook/releases/latest/)
+latest=$(echo $dlink | tr -dc '0-9')
+dlink=$dlink'brook_linux_amd64'
+
+if test -f "$path/brook"; then
+	current=$($path/brook -v | tr -dc '0-9')
+	if [[ latest > current ]]; then
+		echo 'New version found, would you like to update?'
+	fi
+fi
+
+
 printf "What would you like to do?\n"
 printf "$grn\t1.Install Brook\n$clr"
 printf "$yel\t2.Update Brook\n$clr"
