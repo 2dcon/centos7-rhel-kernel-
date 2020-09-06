@@ -31,6 +31,9 @@ if test -f "$path/brook"; then
 			rm -f brook_linux_amd64
 
 			systemctl start brook
+			
+			echo 'Done!'
+			exit 0
 		fi
 	else
 		echo 'You have already installed the latest version '$grn$current$clr
