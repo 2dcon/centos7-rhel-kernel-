@@ -9,24 +9,38 @@ clr=$'\e[0m'
 
 #local path
 path='/bin/brook'
+fname='brook_linux_amd64'
 
 #get latest release
 dlink=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/txthinking/brook/releases/latest/)
 latest=$(echo $dlink | tr -dc '0-9')
-dlink=$dlink'brook_linux_amd64'
+dlink=$dlink$fname
 
 if test -f "$path/brook"; then
 	current=$($path/brook -v | tr -dc '0-9')
 	if [[ latest > current ]]; then
 		echo 'New version found, would you like to update?'
+		echo $yel$current$clr' -> '$grn$latest$clr
+		read YN
+		if [[ $YN == y ]]; then
+			systemctl stop brook
+			cd /temp/
+			wget $dlink
+			cp -rf $fname /bin/brook/brook
+			chmod +x /bin/brook/brook
+			rm -f brook_linux_amd64
+
+			systemctl start brook
+		fi
+	else
+		echo 'You have already installed the latest version '$grn$current$clr
 	fi
 fi
 
 
 printf "What would you like to do?\n"
 printf "$grn\t1.Install Brook\n$clr"
-printf "$yel\t2.Update Brook\n$clr"
-printf "$red\t3.Uninstall Brook$clr"
+printf "$red\t2.Uninstall Brook$clr"
 
 read OPTION
 
@@ -66,7 +80,7 @@ case $OPTION in
 			rm brook
 		fi
 
-		wget https://github.com/txthinking/brook/releases/download/v20200909/brook_linux_amd64
+		wget $dlink
 		
 		mv brook_linux_amd64 brook
 		chmod +x brook
@@ -119,16 +133,7 @@ WantedBy=multi-user.target" > brook.service
 		;;
 	
 	2)
-		systemctl stop brook
-		
-		cd /temp/
-		wget https://github.com/txthinking/brook/releases/download/v20200909/brook_linux_amd64
-		cp -rf brook_linux_amd64 /bin/brook/brook
-		chmod +x /bin/brook/brook
-		rm -f brook_linux_amd64
-		
-		systemctl start brook
-		;;
+
 	3)
 		printf "Uninstall Brook(y/n)"
 		read YN
