@@ -14,7 +14,7 @@ fname='brook_linux_amd64'
 #get latest release
 dlink=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/txthinking/brook/releases/latest/)
 latest=$(echo $dlink | tr -dc '0-9')
-dlink=$dlink$fname
+dlink='https://github.com/txthinking/brook/releases/download/v'$latest'/brook_linux_arm64'
 
 if test -f "$path/brook"; then
 	current=$($path/brook -v | tr -dc '0-9')
