@@ -18,7 +18,7 @@ dlink='https://github.com/txthinking/brook/releases/download/v'$latest'/brook_li
 
 if test -f "$path/brook"; then
 	current=$($path/brook -v | tr -dc '0-9')
-	if [[ latest > current ]]; then
+	if (( latest > current )); then
 		echo 'New version found, would you like to update?'
 		echo $yel$current$clr' -> '$grn$latest$clr
 		read YN
