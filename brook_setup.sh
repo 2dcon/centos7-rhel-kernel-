@@ -136,8 +136,6 @@ WantedBy=multi-user.target" > brook.service
 		;;
 	
 	2)
-
-	3)
 		printf "Uninstall Brook(y/n)"
 		read YN
 		if [[ $YN != Y && $YN != y ]]; then
