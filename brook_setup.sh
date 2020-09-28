@@ -20,7 +20,7 @@ dlink='https://github.com/txthinking/brook/releases/download/v'$latest'/brook_li
 if ! $(sysctl net.ipv4.tcp_congestion_control | grep -q bbr); then
    echo "Would you like to enable BBR? (y/n)"
    read $YN
-   if [[ $YN == 'y' ]]; then
+   if [[ $YN == y ]]; then
    	echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 	echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 	sysctl -p
