@@ -16,6 +16,19 @@ dlink=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/txthinking/
 latest=$(echo $dlink | tr -dc '0-9')
 dlink='https://github.com/txthinking/brook/releases/download/v'$latest'/brook_linux_amd64'
 
+#check bbr
+if $(sysctl net.ipv4.tcp_available_congestion_control | grep -q 'bbr') && ! $(sysctl net.ipv4.tcp_congestion_control | grep -q bbr); then
+   echo "Would you like to enable BBR? (y/n)"
+   read $YN
+   if [[ $YN == 'y' ]]; then
+   	echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+	echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+	sysctl -p
+   fi
+fi
+
+if (sysctl net.ipv4.tcp_available_congestion_control)
+
 if test -f "$path/brook"; then
 	current=$($path/brook -v | tr -dc '0-9')
 	if (( latest > current )); then
