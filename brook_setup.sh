@@ -124,6 +124,8 @@ Description=Brook VPN
 Type=idle
 LimitNOFILE=99999
 ExecStart=/bin/brook/brook server -l :$PORT -p $PW
+SuccessExitStatus=1 143
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target" > brook.service
