@@ -1,0 +1,105 @@
+#!/bin/bash
+#a script to manage multiple brook clients
+red=$'\e[1;31m'
+yel=$'\e[1;33m'
+grn=$'\e[1;32m'
+clr=$'\e[0m'
+
+DIR=$'/etc/systemd/system'
+
+case "$1" in
+  add)
+
+    cd $DIR
+
+    #set file name
+    echo 'Enter server name: '
+    read sname
+    filename='br-'$sname'.service'
+
+    while [[ -f "$filename" ]] ; do
+      echo 'Server already exist! Choose another name: '
+      read sname
+      filename='br-'$sname'.service'
+    done
+
+    #set connection
+    echo 'Enter server ip: '
+    read ip
+    echo 'Enter server port: '
+    read sport
+    echo 'Enter password: '
+    read pw
+    echo 'Enter local port: '
+    read lport
+
+
+    echo "[Unit]
+Description=brook
+
+[Service]
+Type=idle
+LimitNOFILE=99999
+ExecStart=/usr/bin/vpn/brook/brook client -s $ip:$sport -p $pw --socks5 192.168.2.1:$lport
+SuccessExitStatus=1 143
+
+[Install]
+WantedBy=multi-user.target" >> $filename
+
+    systemctl daemon-reload
+    systemctl start $filename
+    systemctl enable $filename
+
+    echo "Done!"
+    ;;
+
+    list)
+      mapfile -t name < <(systemctl status br-* | grep -oP '^●.*' | cut -d'-' -f2 | cut -d'.' -f1)
+      mapfile -t port < <(systemctl status br-* | grep -oP '192.168.2.1.*' | cut -d':' -f2 | cut -d' ' ->
+      mapfile -t stat < <(systemctl status br-* | grep -oP 'Active:.*' | cut -d' ' -f2)
+      printf "List of brook servers:\n========================="
+      for (( i=0; i<${#name[@]}; i++ )); do
+        if [[ ${stat[i]} == "active" ]]; then
+          c=$grn
+        else
+          c=$red
+        fi     
+        printf "\n$c${name[i]}$clr\n${stat[i]}  |  port: ${port[i]}\n"
+      done
+      printf "=========================\n"
+      ;;
+
+    rm)
+      cd '/etc/systemd/system/'
+      for filename in *; do
+        if [[ "$filename" == "br-"* ]]; then
+          filelist[$i]=$filename
+          ((i++))             
+        fi    
+      done
+
+      for ((j = 0; j < i; j++)); do
+        echo $((j+1)). ${filelist[$j]}                  
+      done      
+
+      echo "Select a unit to delete, or 0 to delete all"
+      read k
+      if (( k >= i + 1 || k < 0 )); then
+        echo 'Invalid number.'
+      elif (( k == 0 )); then
+        read -n 1 -r -s -p $"Deleting ${red}all units.${clr} Press enter to continue..."
+        systemctl stop br-*
+        rm -f br-*         
+      else 
+        ((k--))        
+        read -n 1 -r -s -p $"Deleting $yel${filelist[$k]}$clr. Press enter to continue..."
+        systemctl stop ${filelist[$k]}
+        rm -f ${filelist[$k]}           
+      fi
+      printf "\nDone!\n"   
+      ;;
+
+  ver)
+    /usr/bin/vpn/brook/brook -v
+    ;;
+esac
