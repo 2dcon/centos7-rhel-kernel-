@@ -1,5 +1,5 @@
 #################################################
-# WARNING: make sure to note down the new port! #
+# WARNING: make sure to write down the new port! #
 #################################################
 #!/bin/bash
 
